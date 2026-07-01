@@ -12,7 +12,8 @@ app = Flask(__name__)
 CORS(app)
 
 # 1. load the model
-model_url = "https://drive.google.com/file/d/1jv5knJ6zorjedIgXBL-z1zB7ZLXaYa-U/view?usp=drive_link"
+model_url = "https://docs.google.com/uc?export=download&id=1jv5knJ6zorjedIgXBL-z1zB7ZLXaYa-U"
+
 
 with urlopen(model_url) as f:
     artifacts = joblib.load(f)
