@@ -113,7 +113,7 @@ function App() {
       <div className="overlay">
         <nav className="navbar">
           <div className="logo">
-            <video className="logo-video" src="/src/assets/animated_logo.mp4" autoPlay={false} muted playsInline loop={false} />
+            <video className="logo-video" src="/public/animated_logo.mp4" autoPlay={false} muted playsInline loop={false} />
             <span className="brand-name">CarPort</span>
           </div>
 
