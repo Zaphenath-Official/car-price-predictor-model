@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/', // Changes from './' to '/' for clean root asset mapping
   server: {
     proxy: {
       '/api': {

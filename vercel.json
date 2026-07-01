@@ -1,38 +1,8 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "engine/app.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "app/package.json",
-      "use": "@vercel/static-build"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/assets/(.*).js",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript"
-        }
-      ]
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "engine/app.py"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "app/dist/assets/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "app/dist/index.html"
+      "source": "/api/(.*)",
+      "destination": "/engine/app.py"
     }
   ]
 }
