@@ -10,14 +10,29 @@
       "use": "@vercel/static-build"
     }
   ],
+  "headers": [
+    {
+      "source": "/assets/(.*).js",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        }
+      ]
+    }
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "engine/app.py"
     },
     {
+      "src": "/assets/(.*)",
+      "dest": "app/dist/assets/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "app/$1"
+      "dest": "app/dist/index.html"
     }
   ]
 }
