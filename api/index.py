@@ -24,7 +24,7 @@ def predict_price():
 
     try:
         current_dir = os.path.dirname(__file__)
-        model_path = os.path.join(current_dir, 'models', 'craiglist_engine.joblib')
+        model_path = os.path.join(current_dir, 'models', 'craigslist_engine.joblib')
         artifacts = joblib.load(model_path)
 
     except Exception as exc:
