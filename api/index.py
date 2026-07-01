@@ -15,16 +15,6 @@ CORS(app)
 model_url = "https://docs.google.com/uc?export=download&id=1jv5knJ6zorjedIgXBL-z1zB7ZLXaYa-U"
 
 
-with urlopen(model_url) as f:
-    artifacts = joblib.load(f)
-
-web_kmeans = artifacts['kmeans']
-web_encoder = artifacts['encoder']
-web_models = artifacts['neighborhood_models']
-web_routing_features = artifacts['routing_features']
-web_categorical_features = artifacts['categorical_features']
-web_all_features = artifacts['all_features']
-
 @app.route('/api/predict_price', methods=['POST'])
 def predict_price():
     data = request.get_json(silent=True) or {}
@@ -32,6 +22,14 @@ def predict_price():
         return jsonify({'error': 'No input data provided.'}), 400
 
     try:
+        with urlopen(model_url) as f:
+            artifacts = joblib.load(f)
+        web_kmeans = artifacts['kmeans']
+        web_encoder = artifacts['encoder']
+        web_models = artifacts['neighborhood_models']
+        web_routing_features = artifacts['routing_features']
+        web_categorical_features = artifacts['categorical_features']
+        web_all_features = artifacts['all_features']
         raw_input = pd.DataFrame([data], columns=web_all_features)
 
         for col in web_categorical_features:
