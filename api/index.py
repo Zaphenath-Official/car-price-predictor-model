@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import joblib
 import pandas as pd
 import warnings
@@ -7,6 +8,7 @@ warnings.filterwarnings('ignore', category=UserWarning)
 
 
 app = Flask(__name__)
+CORS(app)
 
 # 1. load the model
 artifacts = joblib.load("models/craigslist_engine.joblib")
