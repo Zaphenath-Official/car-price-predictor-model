@@ -24,6 +24,11 @@ def predict_price():
     try:
         with urlopen(model_url) as f:
             artifacts = joblib.load(f)
+
+    except Exception as exc:
+        return jsonify({'error': str(f"Failed to load model: {exc}")}), 500
+    
+    try:
         web_kmeans = artifacts['kmeans']
         web_encoder = artifacts['encoder']
         web_models = artifacts['neighborhood_models']
@@ -31,11 +36,6 @@ def predict_price():
         web_categorical_features = artifacts['categorical_features']
         web_all_features = artifacts['all_features']
         raw_input = pd.DataFrame([data], columns=web_all_features)
-
-    except Exception as exc:
-        return jsonify({'error': str("Failed to load model.")}), 500
-    
-    try:
         for col in web_categorical_features:
             if col in raw_input.columns:
                 raw_input[col] = raw_input[col].fillna('unknown').astype(str).str.lower()
