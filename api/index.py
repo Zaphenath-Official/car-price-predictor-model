@@ -32,6 +32,10 @@ def predict_price():
         web_all_features = artifacts['all_features']
         raw_input = pd.DataFrame([data], columns=web_all_features)
 
+    except Exception as exc:
+        return jsonify({'error': str("Failed to load model.")}), 500
+    
+    try:
         for col in web_categorical_features:
             if col in raw_input.columns:
                 raw_input[col] = raw_input[col].fillna('unknown').astype(str).str.lower()
@@ -48,8 +52,9 @@ def predict_price():
         predicted_price = selected_expert_model.predict(raw_input)[0]
 
         return jsonify({'estimated_price': float(predicted_price)})
+
     except Exception as exc:
-        return jsonify({'error': str(exc)}), 500
+        return jsonify({'error': str("Failed to make prediction.")}), 500
 
 
 if __name__ == '__main__':
