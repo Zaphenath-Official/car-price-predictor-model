@@ -3,11 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    // Forces Vite to place the build files where Vercel expects them
-    outDir: '../dist',
-    emptyOutDir: true,
-  },
+  base: './', // Ensures assets are loaded relative to index.html
   server: {
     proxy: {
       '/api': {
