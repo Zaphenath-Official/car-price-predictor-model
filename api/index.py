@@ -3,6 +3,7 @@ from flask_cors import CORS
 import joblib
 import pandas as pd
 import warnings
+from urllib.request import urlopen
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
@@ -11,7 +12,10 @@ app = Flask(__name__)
 CORS(app)
 
 # 1. load the model
-artifacts = joblib.load("models/craigslist_engine.joblib")
+model_url = "https://drive.google.com/file/d/1jv5knJ6zorjedIgXBL-z1zB7ZLXaYa-U/view?usp=drive_link"
+
+with urlopen(model_url) as f:
+    artifacts = joblib.load(f)
 
 web_kmeans = artifacts['kmeans']
 web_encoder = artifacts['encoder']
