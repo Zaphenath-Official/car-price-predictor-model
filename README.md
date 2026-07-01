@@ -4,6 +4,8 @@
 
 A sleek, easy-to-use web app that forecasts used car prices using historical market data and predictive modeling. Built for buyers, sellers, and analysts who want fast, explainable price estimates and actionable insights in one place.
 
+Try the live app: https://car-price-predictor-model.vercel.app
+
 ## Live demo / 1‑minute walkthrough
 
 <!-- Demo video placeholder: replace /app/public/demo.mp4 with your 1-minute video -->
@@ -13,7 +15,7 @@ A sleek, easy-to-use web app that forecasts used car prices using historical mar
   Your browser does not support the video tag. Add a file at `app/public/demo.mp4` (1 minute) to enable this demo here.
 </video>
 
-> Tip: For Vercel deployments, upload the video to `app/public/demo.mp4` before deploying so the embedded player loads the file from the same origin.
+> Tip: For Vercel deployments, upload the video to `app/public/demo.mp4` before deploying so the embedded player loads the file from the same origin. You can also link directly to the live app above.
 
 ## Why this matters
 
