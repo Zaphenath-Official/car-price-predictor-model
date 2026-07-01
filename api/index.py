@@ -3,7 +3,8 @@ from flask_cors import CORS
 import joblib
 import pandas as pd
 import warnings
-from urllib.request import urlopen
+import os
+
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
@@ -22,8 +23,9 @@ def predict_price():
         return jsonify({'error': 'No input data provided.'}), 400
 
     try:
-        with urlopen(model_url) as f:
-            artifacts = joblib.load(f)
+        current_dir = os.path.dirname(__file__)
+        model_path = os.path.join(current_dir, 'models', 'craiglist_engine.joblib')
+        artifacts = joblib.load(model_path)
 
     except Exception as exc:
         return jsonify({'error': str(f"Failed to load model: {exc}")}), 500
