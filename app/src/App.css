@@ -27,7 +27,8 @@
   background-position: center;
   padding: 1rem 1rem 1.5rem;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .overlay {
@@ -73,6 +74,13 @@
   letter-spacing: 0.04em;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.8rem;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -101,6 +109,47 @@
   box-shadow: 0 8px 18px rgba(255, 93, 20, 0.3);
   font-family: 'Zain', sans-serif;
   font-weight: 700;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.24rem;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: white;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 0 auto 1rem;
+  max-width: 1020px;
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.mobile-menu a {
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'ElmsSans', sans-serif;
+  font-weight: 500;
 }
 
 .row {
@@ -314,4 +363,89 @@
 .dot.active {
   background: #ff7a1a;
   transform: scale(1.15);
+}
+
+@media (max-width: 860px) {
+  .navbar {
+    grid-template-columns: 1fr auto;
+    border-radius: 22px;
+    padding: 0.8rem 0.95rem;
+  }
+
+  .nav-actions {
+    gap: 0.5rem;
+  }
+
+  .desktop-nav,
+  .desktop-link {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: flex;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .info-card {
+    min-height: auto;
+  }
+
+  .lead-text {
+    font-size: clamp(1.8rem, 4.2vw, 2.5rem);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  #bg-card {
+    padding: 0.75rem;
+  }
+
+  .overlay {
+    padding: 0;
+  }
+
+  .navbar {
+    padding: 0.75rem 0.85rem;
+  }
+
+  .brand-name {
+    font-size: 1.4rem;
+  }
+
+  .logo-video {
+    width: 46px;
+    height: 46px;
+  }
+
+  .lead-text {
+    font-size: 1.7rem;
+  }
+
+  .card {
+    padding: 0.9rem;
+  }
+
+  .step-nav {
+    flex-direction: column-reverse;
+  }
+
+  .nav-spacer {
+    display: none;
+  }
+
+  .nav-btn {
+    justify-content: center;
+  }
 }

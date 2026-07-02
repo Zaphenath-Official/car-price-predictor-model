@@ -28,16 +28,90 @@ const manufacturerOptions = [
   'ferrari', 'mini', 'pontiac', 'fiat', 'tesla', 'saturn', 'mercury',
   'harley-davidson', 'datsun', 'aston-martin', 'land rover', 'morgan',
 ]
-const modelSuggestions = [
-  'sierra 1500 crew cab slt',
-  'silverado 1500',
-  'camry',
-  'civic',
-  'altima',
-  'gand wagoneer',
-  '96 Suburban',
-  'Paige Glenbrook Touring',
-]
+
+const validVehicleCombinations = {
+  gmc: ['sierra 1500', 'terrain', 'yukon', 'acadia', 'canyon'],
+  chevrolet: ['silverado 1500', 'camaro', 'malibu', 'equinox', 'impala', 'corvette', 'traverse', 'cruze'],
+  toyota: ['camry', 'corolla', 'rav4', 'highlander', 'prius', 'tacoma', '4runner', 'sienna', 'avalon'],
+  ford: ['f-150', 'mustang', 'escape', 'focus', 'explorer', 'bronco', 'fusion', 'edge', 'expedition'],
+  jeep: ['wrangler', 'grand cherokee', 'cherokee', 'compass', 'renegade', 'gladiator'],
+  nissan: ['altima', 'sentra', 'rogue', 'pathfinder', 'maxima', 'frontier', 'murano', 'versa'],
+  ram: ['1500', '2500', '3500', 'promaster'],
+  mazda: ['mazda3', 'mazda6', 'cx-5', 'cx-9', 'miata'],
+  cadillac: ['cts', 'escalade', 'xt5', 'xt4', 'ct5'],
+  honda: ['civic', 'accord', 'cr-v', 'pilot', 'odyssey', 'fit', 'hr-v'],
+  dodge: ['charger', 'challenger', 'durango', 'journey', 'grand caravan'],
+  lexus: ['es', 'is', 'rx', 'gx', 'nx', 'ls'],
+  jaguar: ['xe', 'xf', 'f-pace', 'e-pace', 'f-type'],
+  buick: ['encore', 'enclave', 'regal', 'cascade', 'verano'],
+  chrysler: ['300', 'pacifica', 'voyager', 'pt cruiser'],
+  volvo: ['s60', 'v60', 'xc40', 'xc60', 'xc90'],
+  audi: ['a3', 'a4', 'a6', 'q3', 'q5', 'q7'],
+  infiniti: ['q50', 'q60', 'qx50', 'qx60', 'qx80'],
+  lincoln: ['mkz', 'corsair', 'navigator', 'nautilus', 'mkc'],
+  'alfa-romeo': ['giulia', 'stelvio', '4c'],
+  subaru: ['impreza', 'outback', 'forester', 'legacy', 'crosstrek'],
+  acura: ['integra', 'tlx', 'mdx', 'rdx', 'ilx'],
+  hyundai: ['elantra', 'sonata', 'tucson', 'santa fe', 'kona'],
+  'mercedes-benz': ['c-class', 'e-class', 's-class', 'gle', 'glc', 'cla'],
+  bmw: ['3 series', '5 series', 'x3', 'x5', 'm4'],
+  mitsubishi: ['lancer', 'outlander', 'mirage', 'eclipse cross'],
+  volkswagen: ['golf', 'jetta', 'tiguan', 'atlas', 'passat'],
+  porsche: ['911', 'cayenne', 'panthera', 'boxster', 'macan'],
+  kia: ['soul', 'sportage', 'sorento', 'forte', 'telluride'],
+  rover: ['75', '200', '400'],
+  ferrari: ['488', 'f8', 'roma', 'sf90'],
+  mini: ['cooper', 'countryman', 'clubman'],
+  pontiac: ['gto', 'grand prix', 'bonneville'],
+  fiat: ['500', '500x', 'panda'],
+  tesla: ['model 3', 'model s', 'model x', 'model y'],
+  saturn: ['ion', 'vue', 'astra'],
+  mercury: ['grand marquis', 'mountaineer', 'milan'],
+  'harley-davidson': ['sportster', 'street glide', 'road king'],
+  datsun: ['240z', '280z', 'sentra'],
+  'aston-martin': ['db11', 'vantage', 'dbx'],
+  'land rover': ['range rover', 'discovery', 'defender', 'evoque'],
+  morgan: ['4/4', 'plus 4', 'plus 8'],
+}
+
+const validTypeSizeCombinations = {
+  sedan: ['compact', 'mid-size', 'full-size'],
+  suv: ['compact', 'mid-size', 'full-size'],
+  truck: ['mid-size', 'full-size'],
+  coupe: ['compact', 'mid-size'],
+  hatchback: ['compact', 'mid-size'],
+  wagon: ['mid-size', 'full-size'],
+  van: ['full-size'],
+}
+
+const getCombinationError = (manufacturer, model, size, type) => {
+  const normalizedManufacturer = String(manufacturer || '').trim().toLowerCase()
+  const normalizedModel = String(model || '').trim().toLowerCase()
+  const normalizedSize = String(size || '').trim().toLowerCase()
+  const normalizedType = String(type || '').trim().toLowerCase()
+
+  if (!normalizedManufacturer) return 'Please select a manufacturer.'
+  if (!normalizedModel) return 'Please enter a model.'
+
+  const supportedModels = validVehicleCombinations[normalizedManufacturer]
+  if (!supportedModels) {
+    return 'That manufacturer is not supported for safe predictions.'
+  }
+
+  if (!supportedModels.some((supportedModel) => supportedModel.toLowerCase() === normalizedModel)) {
+    return `There is no such car combination for ${manufacturer} ${model}.`
+  }
+
+  if (!validTypeSizeCombinations[normalizedType]) {
+    return 'That vehicle type is not supported for safe predictions.'
+  }
+
+  if (!validTypeSizeCombinations[normalizedType].includes(normalizedSize)) {
+    return `There is no such car combination for ${normalizedType} in ${normalizedSize} size.`
+  }
+
+  return ''
+}
 const conditionOptions = ['excellent', 'good', 'fair', 'like new', 'new', 'salvage']
 const cylinderOptions = ['4 cylinders', '6 cylinders', '8 cylinders', '5 cylinders', 'other', '3 cylinders', '10 cylinders', '12 cylinders']
 const fuelOptions = ['petrol', 'diesel', 'cng', 'hybrid', 'electric']
@@ -54,6 +128,7 @@ function App() {
   const [result, setResult] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -69,6 +144,10 @@ function App() {
     setStep(1)
   }
 
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev)
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     setLoading(true)
@@ -76,14 +155,24 @@ function App() {
     setResult('')
 
     try {
+      const manufacturer = String(formData.manufacturer || '').trim().toLowerCase()
+      const model = String(formData.model || '').trim().toLowerCase()
+      const combinationError = getCombinationError(manufacturer, model, 'mid-size', 'sedan')
+
+      if (combinationError) {
+        setError(combinationError)
+        setLoading(false)
+        return
+      }
+
       const payload = {
         year: Number(formData.year),
         odometer: Number(formData.odometer),
         lat: Number(formData.lat || 37.7),
-        model: String(formData.model || '').toLowerCase(),
+        model,
         size: 'mid-size',
         type: 'sedan',
-        manufacturer: String(formData.manufacturer || '').toLowerCase(),
+        manufacturer,
         cylinders: String(formData.cylinders || '').toLowerCase(),
         state: String(formData.state || '').toLowerCase(),
         condition: String(formData.condition || '').toLowerCase(),
@@ -117,14 +206,31 @@ function App() {
             <span className="brand-name">CarPort</span>
           </div>
 
-          <ul className="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#help">Help</a></li>
-            <li><a href="#services">Services</a></li>
-          </ul>
+          <div className="nav-actions">
+            <ul className="nav-links desktop-nav">
+              <li><a href="#about" onClick={() => setMenuOpen(false)}>About</a></li>
+              <li><a href="#help" onClick={() => setMenuOpen(false)}>Help</a></li>
+              <li><a href="#services" onClick={() => setMenuOpen(false)}>Services</a></li>
+            </ul>
 
-          <a href="#contact" className="contact-link">Contact</a>
+            <a href="#contact" className="contact-link desktop-link" onClick={() => setMenuOpen(false)}>Contact</a>
+
+            <button type="button" className="menu-toggle" onClick={toggleMenu} aria-expanded={menuOpen} aria-label="Toggle navigation">
+              <span />
+              <span />
+              <span />
+            </button>
+          </div>
         </nav>
+
+        {menuOpen && (
+          <div className="mobile-menu">
+            <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+            <a href="#help" onClick={() => setMenuOpen(false)}>Help</a>
+            <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+            <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+          </div>
+        )}
 
         <div className="row">
           <div className="card info-card">
@@ -171,9 +277,10 @@ function App() {
                       <label htmlFor="model">Model</label>
                       <input type="text" name="model" id="model" value={formData.model} onChange={handleChange} placeholder="Camry" list="model-options" />
                       <datalist id="model-options">
-                        {modelSuggestions.map((modelName) => (
-                          <option key={modelName} value={modelName} />
-                        ))}
+                        {(formData.manufacturer ? validVehicleCombinations[formData.manufacturer.toLowerCase()] || [] : [])
+                          .map((modelName) => (
+                            <option key={modelName} value={modelName} />
+                          ))}
                       </datalist>
                     </div>
 
