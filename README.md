@@ -1,6 +1,5 @@
 # 🚗 High-Dimensional Craigslist Vehicle Valuation Engine
 
-[![Live Deployment](https://img.shields.io/badge/Demo-Live%20on%20Vercel-blueviolet?style=for-the-badge&logo=vercel)](https://car-price-predictor-model.vercel.app/)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://www.python.org)
 [![Framework](https://img.shields.io/badge/Backend-Flask%20%2F%20FastAPI-orange?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/)
 
