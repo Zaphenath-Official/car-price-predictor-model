@@ -83,7 +83,7 @@ To run a diagnostic hit through external testing platforms like Postman or Curl,
 ### 🗂️ Project Directory Topology
 ```text
 ── api/
-│   ├── app.py                      # Main Vercel serverless application logic
+│   ├── index.py                      # Main Vercel serverless application logic
 │   └── models/
 │       └── craigslist_engine.joblib # Serialized pipeline state dictionary 
 ├── requirements.txt                # Static production version locks
